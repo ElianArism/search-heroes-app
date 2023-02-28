@@ -1,9 +1,16 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const addNavbarClasses = ({ isActive }) =>
   isActive ? "nav-item nav-link active" : "nav-item nav-link";
 
 export const Navbar = () => {
+  const navigate = useNavigate();
+
+  const onLogout = () =>
+    navigate("/login", {
+      replace: true, // reemplaza el historial de navegacion para evitar que el usuario pueda acceder a la ruta anterior
+    });
+
   return (
     <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-2">
       <Link className="navbar-brand" to="/">
@@ -15,9 +22,11 @@ export const Navbar = () => {
           <NavLink className={addNavbarClasses} to="/marvel">
             Marvel
           </NavLink>
-
           <NavLink className={addNavbarClasses} to="/dc">
             DC
+          </NavLink>
+          <NavLink className={addNavbarClasses} to="/search">
+            Search
           </NavLink>
         </div>
       </div>
@@ -28,11 +37,12 @@ export const Navbar = () => {
             Elian
           </span>
 
-          <button className="nav-item nav-link btn">Logout</button>
-
-          <NavLink className={addNavbarClasses} to="/login">
+          <button
+            onClick={onLogout}
+            className="nav-item nav-link btn"
+          >
             Logout
-          </NavLink>
+          </button>
         </ul>
       </div>
     </nav>

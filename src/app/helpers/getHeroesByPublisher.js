@@ -1,4 +1,4 @@
-import { HEROES } from "../../assets/heroes";
+import { HEROES } from "../../../assets/heroes";
 
 export const getHeroesByPublisher = (publisher) => {
   if (publisher === "Marvel Comics" || publisher === "DC Comics") {

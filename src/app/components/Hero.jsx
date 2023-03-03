@@ -18,10 +18,13 @@ export const Hero = ({
 
   return (
     <>
-      <li key={id} className="col-3">
+      <li
+        key={id}
+        className="col-3 animate__animated animate__fadeIn"
+      >
         <div className="card">
           <div className="row no-gutters">
-            <div className="col-4">
+            <div className="col-4 ">
               <img
                 src={heroRelativePath}
                 className="card-img"

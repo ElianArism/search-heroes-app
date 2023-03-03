@@ -1,5 +1,6 @@
 import { useMemo } from "react ";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { getHeroById } from "../helpers";
 export const HeroPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export const HeroPage = () => {
 
   return (
     <div className="row mt-5">
-      <div className="col-4">
+      <div className="col-4 animate__animated animate__fadeInLeft">
         <img
           src={`/assets/heroes/${hero.id}.jpg`}
           alt={hero.superhero}

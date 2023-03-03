@@ -12,7 +12,9 @@ export const HeroList = ({ publisher }) => {
     <>
       <ul className="row g-3">
         {heroes.map((hero) => (
-          <Hero key={hero.id} {...hero} />
+          <div key={hero.id} className="col-3 my-2">
+            <Hero {...hero} />
+          </div>
         ))}
       </ul>
     </>

@@ -1,19 +1,38 @@
 import queryString from "query-string";
-import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { Hero } from "../components";
+import { getHeroesByName } from "../helpers/getHeroesByName";
 import { useForm } from "../hooks/useForm";
+
+const ConditionalAlerts = ({
+  searchValue = "",
+  herouesFounded = 0,
+}) => {
+  return (
+    <>
+      {!searchValue.length && (
+        <div className="alert alert-primary">Search a hero</div>
+      )}
+
+      {searchValue.length && herouesFounded < 1 && (
+        <div className="alert alert-danger">
+          There's no results with{" "}
+          <span className="text-muted">{searchValue}</span>
+        </div>
+      )}
+    </>
+  );
+};
 
 export const SearchPage = () => {
   const navigate = useNavigate();
-  const location = useLocation(); // used to read query params
-  const params = useMemo(
-    () => queryString.parse(location.search),
-    [location.search]
-  ); // 3rd party lib to extract query params
-
+  const location = useLocation(); // used to read query
+  const { hero = "" } = queryString.parse(location.search); // 3rd party lib to extract query params
   const { onInputChange, onResetForm, searchValue } = useForm({
-    searchValue: "",
+    searchValue: hero,
   });
+
+  const heroesByName = getHeroesByName(hero);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +40,6 @@ export const SearchPage = () => {
 
     if (!value.length) return;
     navigate("?hero=" + value);
-    console.log(location);
   };
 
   return (
@@ -44,21 +62,25 @@ export const SearchPage = () => {
               value={searchValue}
               onChange={onInputChange}
             />
+            <button type="submit" className="btn btn-success mt-2">
+              Search
+            </button>
           </form>
-          <button type="submit" className="btn btn-success mt-2">
-            Search
-          </button>
         </div>
         <div className="col-7">
           <h3>Results</h3>
           <hr />
-          <div className="alert alert-primary">Search a hero</div>
-          <div className="alert alert-danger">
-            There's no results with{" "}
-            <span className="text-muted">{params.hero}</span>
-          </div>
 
-          {/* {<Hero />} */}
+          <ConditionalAlerts
+            searchValue={hero}
+            herouesFounded={heroesByName.length}
+          />
+
+          {heroesByName.map((hero) => (
+            <div key={hero.id} className="col my-2">
+              <Hero {...hero} />
+            </div>
+          ))}
         </div>
       </div>
     </>

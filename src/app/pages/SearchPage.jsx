@@ -39,6 +39,8 @@ export const SearchPage = () => {
     const value = searchValue.toLowerCase().trim();
 
     if (!value.length) return;
+    else if (hero === value) return;
+
     navigate("?hero=" + value);
   };
 

@@ -5,12 +5,15 @@ export const AuthReducer = (state = {}, action) => {
     case ACTIONS.login:
       return {
         logged: true,
-        name: action.payload,
+        user: action.payload,
       };
+
     case ACTIONS.logout:
       return {
         logged: false,
+        user: null,
       };
+
     default:
       throw new Error("Action not supported");
   }

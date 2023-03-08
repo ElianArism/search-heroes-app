@@ -14,6 +14,9 @@ export const AuthReducer = (state = {}, action) => {
         user: null,
       };
 
+    case ACTIONS.default:
+      return { ...state };
+
     default:
       throw new Error("Action not supported");
   }
